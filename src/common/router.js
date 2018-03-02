@@ -85,6 +85,18 @@ export const getRouterData = (app) => {
       // name: '工作台',
       // authority: 'admin',
     },
+    '/organization/management': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/List/CardList')),
+    },
+    '/organization/admin': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/List/TableList')),
+    },
+    '/event/management': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/List/BasicList')),
+    },
+    '/event/admin': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/List/TableList')),
+    },
     '/form/basic-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/BasicForm')),
     },

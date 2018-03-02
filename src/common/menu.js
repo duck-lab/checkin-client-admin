@@ -28,7 +28,7 @@ const menuData = [{
   }] }, {
   name: '活动管理',
   icon: 'tags-o',
-  path: 'events',
+  path: 'event',
   children: [{
     name: '活动',
     path: 'management',
