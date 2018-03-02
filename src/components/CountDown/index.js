@@ -21,9 +21,12 @@ class CountDown extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.target !== nextProps.target) {
+      clearTimeout(this.timer);
       const { lastTime } = this.initTime(nextProps);
       this.setState({
         lastTime,
+      }, () => {
+        this.tick();
       });
     }
   }
@@ -48,9 +51,8 @@ class CountDown extends Component {
     }
 
     lastTime = targetTime - new Date().getTime();
-
     return {
-      lastTime,
+      lastTime: lastTime < 0 ? 0 : lastTime,
     };
   }
   // defaultFormat = time => (
@@ -60,11 +62,11 @@ class CountDown extends Component {
     const hours = 60 * 60 * 1000;
     const minutes = 60 * 1000;
 
-    const h = fixedZero(Math.floor(time / hours));
-    const m = fixedZero(Math.floor((time - (h * hours)) / minutes));
-    const s = fixedZero(Math.floor((time - (h * hours) - (m * minutes)) / 1000));
+    const h = Math.floor(time / hours);
+    const m = Math.floor((time - (h * hours)) / minutes);
+    const s = Math.floor((time - (h * hours) - (m * minutes)) / 1000);
     return (
-      <span>{h}:{m}:{s}</span>
+      <span>{fixedZero(h)}:{fixedZero(m)}:{fixedZero(s)}</span>
     );
   }
   tick = () => {
@@ -76,26 +78,25 @@ class CountDown extends Component {
         clearTimeout(this.timer);
         this.setState({
           lastTime: 0,
+        }, () => {
+          if (onEnd) {
+            onEnd();
+          }
         });
-
-        if (onEnd) {
-          onEnd();
-        }
       } else {
         lastTime -= this.interval;
         this.setState({
           lastTime,
+        }, () => {
+          this.tick();
         });
-
-        this.tick();
       }
     }, this.interval);
   }
 
   render() {
-    const { format = this.defaultFormat, ...rest } = this.props;
+    const { format = this.defaultFormat, onEnd, ...rest } = this.props;
     const { lastTime } = this.state;
-
     const result = format(lastTime);
 
     return (<span {...rest}>{result}</span>);
