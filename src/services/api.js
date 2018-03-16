@@ -68,7 +68,8 @@ export async function fakeAccountLogin(params) {
 }
 
 export async function fakeRegister(params) {
-  return request('/api/register', {
+  // TODO: use general config to set host domain.
+  return request('http://127.0.0.1:7001/users', {
     method: 'POST',
     body: params,
   });

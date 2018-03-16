@@ -3,6 +3,7 @@ import { notification } from 'antd';
 import { routerRedux } from 'dva/router';
 import store from '../index';
 
+// const host = 'http://127.0.0.1:7001'; // TODO: to set up doamin with env
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -48,24 +49,25 @@ export default function request(url, options) {
   };
   const newOptions = { ...defaultOptions, ...options };
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
-    if (!(newOptions.body instanceof FormData)) {
-      newOptions.headers = {
-        Accept: 'application/json',
-        'Content-Type': 'application/json; charset=utf-8',
-        ...newOptions.headers,
-      };
-      newOptions.body = JSON.stringify(newOptions.body);
-    } else {
-      // newOptions.body is FormData
-      newOptions.headers = {
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
-        ...newOptions.headers,
-      };
-    }
+    // TODO: decide to use json only or allow web form.
+    // if (!(newOptions.body instanceof FormData)) {
+    newOptions.headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json; charset=utf-8',
+      ...newOptions.headers,
+    };
+    newOptions.body = JSON.stringify(newOptions.body);
+    // } else {
+    //   // newOptions.body is FormData
+    //   newOptions.headers = {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'multipart/form-data',
+    //     ...newOptions.headers,
+    //   };
+    // }
   }
 
-  return fetch(url, newOptions)
+  return fetch(`${url}`, newOptions)
     .then(checkStatus)
     .then((response) => {
       if (newOptions.method === 'DELETE' || response.status === 204) {
