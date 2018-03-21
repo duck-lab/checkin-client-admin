@@ -17,11 +17,19 @@ export default {
         type: 'registerHandle',
         payload: response,
       });
+      // TODO: Redirect to success page.
+      // if(response.status === 'ok') {
+      //   console.log('>>> in jump')
+      //   reloadAuthorized();
+      //   yield put(routerRedux.push('/'));
+      //   // yield put(routerRedux.push('/user/register-result'))
+      // }
     },
   },
 
   reducers: {
     registerHandle(state, { payload }) {
+      // TODO: Define authority level
       setAuthority('user');
       reloadAuthorized();
       return {
