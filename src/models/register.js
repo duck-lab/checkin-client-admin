@@ -1,4 +1,4 @@
-import { fakeRegister } from '../services/api';
+import { register } from '../services/api';
 import { setAuthority } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
 
@@ -10,16 +10,14 @@ export default {
   },
 
   effects: {
-    *submit(info, { call, put }) {
-      const { payload } = info;
-      const response = yield call(fakeRegister, payload);
+    *submit({ payload }, { call, put }) {
+      const response = yield call(register, payload);
       yield put({
         type: 'registerHandle',
         payload: response,
       });
       // TODO: Redirect to success page.
       // if(response.status === 'ok') {
-      //   console.log('>>> in jump')
       //   reloadAuthorized();
       //   yield put(routerRedux.push('/'));
       //   // yield put(routerRedux.push('/user/register-result'))

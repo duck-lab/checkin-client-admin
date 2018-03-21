@@ -60,6 +60,10 @@ export async function queryFakeList(params) {
   return request(`/api/fake_list?${stringify(params)}`);
 }
 
+export async function queryNotices() {
+  return request('/api/notices');
+}
+
 export async function userLogin(params) {
   return request('http://127.0.0.1:7001/login/', {
     method: 'POST',
@@ -67,7 +71,7 @@ export async function userLogin(params) {
   });
 }
 
-export async function fakeRegister(params) {
+export async function register(params) {
   // TODO: use general config to set host domain.
   return request('http://127.0.0.1:7001/users', {
     method: 'POST',
@@ -75,6 +79,9 @@ export async function fakeRegister(params) {
   });
 }
 
-export async function queryNotices() {
-  return request('/api/notices');
+export async function createOrganization(params) {
+  return request('http://127.0.0.1:7001/orgs', {
+    method: 'POST',
+    body: params,
+  });
 }
