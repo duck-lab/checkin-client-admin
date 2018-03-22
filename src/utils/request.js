@@ -44,6 +44,10 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, options) {
+  const accessToken = localStorage.getItem('accessToken');
+
+  // TODO: Handling expired and refresh token
+
   const defaultOptions = {
     credentials: 'include',
   };
@@ -54,6 +58,7 @@ export default function request(url, options) {
     newOptions.headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json; charset=utf-8',
+      Authorization: `Bearer ${accessToken}`,
       ...newOptions.headers,
     };
     newOptions.body = JSON.stringify(newOptions.body);

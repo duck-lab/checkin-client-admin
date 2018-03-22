@@ -1,6 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { userLogin } from '../services/api';
-import { setAuthority } from '../utils/authority';
+import { setAuthority, setAccessToken } from '../utils/authority';
 import { reloadAuthorized } from '../utils/Authorized';
 
 export default {
@@ -49,6 +49,7 @@ export default {
   reducers: {
     changeLoginStatus(state, { payload }) {
       setAuthority(payload.currentAuthority);
+      setAccessToken(payload);
       return {
         ...state,
         status: payload.status,

@@ -6,3 +6,11 @@ export function getAuthority() {
 export function setAuthority(authority) {
   return localStorage.setItem('antd-pro-authority', authority);
 }
+
+export function setAccessToken(token) {
+  localStorage.setItem('accessToken', token.accessToken || null);
+  localStorage.setItem('accessTokenExpiresAt', token.accessTokenExpiresAt || null);
+  localStorage.setItem('refreshToken', token.refreshToken || null);
+  localStorage.setItem('refreshTokenExpiresAt', token.refreshTokenExpiresAt || null);
+  return
+}
